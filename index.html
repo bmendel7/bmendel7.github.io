@@ -1,0 +1,605 @@
+<!--
+Unofficial student page for Bailey Thomas Mendel, ISU MSS 2026.
+“International Space University” named here for study use only.
+This file is fully self-contained and ready for GitHub Pages as index.html.
+All CSS is in one <style> block in <head>.
+All JS is in one <script> block at end of <body>.
+Bootstrap 5 + Bootstrap Icons via jsDelivr CDN.
+No external fonts. System font stack.
+No ISU logos are used. Colors are ISU-inspired.
+If cv.pdf is not found at the repo root, a note is shown in #cvNote.
+All nav links match section IDs.
+All images have alt text or a visible note if missing.
+Theme toggle is accessible and persists.
+Contact buttons work; “Copy email” provides feedback.
+Current year in footer updates via JS.
+Skip link for accessibility.
+-->
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bailey Thomas Mendel – ISU MSS 2026</title>
+  <meta name="description" content="Bailey Thomas Mendel: MSS 2026 student at ISU. Focused on in-space oncology, disease modeling, and biomanufacturing.">
+  <meta name="author" content="Bailey Thomas Mendel">
+  <meta property="og:title" content="Bailey Thomas Mendel – ISU MSS 2026">
+  <meta property="og:description" content="Unofficial student page. In-space oncology, disease modeling, biomanufacturing.">
+  <meta property="og:type" content="profile">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="profile.jpg">
+  <meta property="og:url" content="">
+  <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/person-fill.svg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --isu-blue: #0b3d91;
+      --isu-gold: #f0b429;
+      --isu-ink:  #0d1b2a;
+      --isu-sky:  #e6f1ff;
+      --bs-primary: var(--isu-blue);
+      --bs-warning: var(--isu-gold);
+      --bs-dark: var(--isu-ink);
+      --bs-light: var(--isu-sky);
+      --bs-body-font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    }
+    [data-bs-theme="dark"] {
+      --bs-body-bg: var(--bs-dark);
+      --bs-body-color: var(--isu-sky);
+      --bs-navbar-bg: var(--isu-blue);
+      --bs-card-bg: #13294b;
+      --bs-link-color: var(--isu-gold);
+      --bs-link-hover-color: #ffd66b;
+      --bs-btn-bg: var(--isu-blue);
+      --bs-btn-color: var(--isu-sky);
+    }
+    [data-bs-theme="light"] {
+      --bs-body-bg: var(--isu-sky);
+      --bs-body-color: var(--isu-ink);
+      --bs-navbar-bg: var(--isu-blue);
+      --bs-card-bg: #fff;
+      --bs-link-color: var(--isu-blue);
+      --bs-link-hover-color: #00306e;
+      --bs-btn-bg: var(--isu-blue);
+      --bs-btn-color: #fff;
+    }
+    html, body {
+      scroll-behavior: smooth;
+      min-height: 100%;
+    }
+    body {
+      background-color: var(--bs-body-bg);
+      color: var(--bs-body-color);
+    }
+    .sticky-top {
+      z-index: 1040;
+    }
+    .navbar {
+      background-color: var(--bs-navbar-bg) !important;
+    }
+    .nav-link, .navbar-brand {
+      color: var(--bs-light) !important;
+    }
+    .nav-link.active, .nav-link:focus, .nav-link:hover {
+      color: var(--isu-gold) !important;
+    }
+    .hero {
+      background: linear-gradient(120deg, var(--isu-blue) 60%, var(--isu-gold) 100%);
+      color: var(--isu-sky);
+      padding: 3rem 0 2rem 0;
+      text-align: center;
+      position: relative;
+    }
+    .hero-img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid var(--isu-gold);
+      margin-bottom: 1rem;
+      background: #fff;
+    }
+    .hero .btn {
+      margin: 0.2rem;
+    }
+    section {
+      padding: 2.5rem 0 2rem 0;
+    }
+    section > .container {
+      max-width: 720px;
+    }
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--isu-blue);
+      margin-bottom: 1.2rem;
+    }
+    [data-bs-theme="dark"] .section-title {
+      color: var(--isu-gold);
+    }
+    .card {
+      background: var(--bs-card-bg);
+      margin-bottom: 1.5rem;
+      border: none;
+      border-radius: 1rem;
+      box-shadow: 0 2px 8px rgba(11,61,145,0.04);
+    }
+    .project-title {
+      font-size: 1.18rem;
+      font-weight: 600;
+      color: var(--isu-blue);
+    }
+    [data-bs-theme="dark"] .project-title {
+      color: var(--isu-gold);
+    }
+    .timeline {
+      border-left: 3px solid var(--isu-blue);
+      margin-left: 1.2rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .timeline-entry {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+    .timeline-entry:last-child {
+      margin-bottom: 0;
+    }
+    .timeline-dot {
+      position: absolute;
+      left: -2.3rem;
+      top: 0.2rem;
+      width: 1.1rem;
+      height: 1.1rem;
+      border-radius: 50%;
+      background: var(--isu-gold);
+      border: 3px solid var(--isu-blue);
+      z-index: 1;
+    }
+    #edit-checklist ul {
+      list-style: inside square;
+      margin: 0 0 0 0.5rem;
+      padding-left: 0;
+    }
+    .btn-theme-toggle {
+      border-radius: 50%;
+      padding: 0.6em 0.75em;
+      font-size: 1.2em;
+      background: var(--isu-ink);
+      color: var(--isu-gold);
+      border: none;
+      transition: background 0.2s;
+    }
+    .btn-theme-toggle:focus {
+      outline: 2px solid var(--isu-gold);
+      outline-offset: 2px;
+    }
+    .copy-feedback {
+      font-size: 0.95em;
+      margin-left: 0.6em;
+      color: var(--isu-blue);
+    }
+    [data-bs-theme="dark"] .copy-feedback {
+      color: var(--isu-gold);
+    }
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: 5px;
+      background: var(--isu-gold);
+      color: var(--isu-ink);
+      padding: 0.4em 1em;
+      z-index: 1050;
+      border-radius: 0.5em;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    .skip-link:focus {
+      left: 15px;
+      outline: 2px solid var(--isu-blue);
+    }
+    @media (max-width: 575px) {
+      .hero {
+        padding: 2.2rem 0 1.2rem 0;
+      }
+      section {
+        padding: 2rem 0 1rem 0;
+      }
+      .section-title {
+        font-size: 1.4rem;
+      }
+    }
+    /* Reduced motion for users who prefer it */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      * {
+        transition: none !important;
+        animation-duration: 0s !important;
+      }
+    }
+  </style>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Bailey Thomas Mendel",
+      "email": "bailey.mendel98@gmail.com",
+      "affiliation": {
+        "@type": "CollegeOrUniversity",
+        "name": "International Space University"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Strasbourg",
+        "addressCountry": "France"
+      },
+      "sameAs": [
+        "https://github.com/bmendel7",
+        "https://www.linkedin.com/in/bailey-mendel"
+      ]
+    }
+  </script>
+</head>
+<body>
+  <a href="#main" class="skip-link" tabindex="1">Skip to content</a>
+
+  <header>
+    <nav class="navbar navbar-expand-md navbar-dark sticky-top shadow-sm" aria-label="Main navigation">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#hero">Bailey Mendel</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+            <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+            <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+            <li class="nav-item"><a class="nav-link" href="#cv">CV</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          </ul>
+          <button id="themeToggle" class="btn btn-theme-toggle ms-3" aria-label="Toggle light/dark theme" type="button">
+            <i id="themeIcon" class="bi bi-moon-stars"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="hero" id="hero">
+      <div class="container">
+        <!-- Profile Image -->
+        <div>
+          <img src="profile.jpg" alt="Profile image of Bailey Thomas Mendel" class="hero-img mb-2"
+            onerror="this.style.display='none';document.getElementById('imgNote').style.display='block';">
+          <div id="imgNote" style="display:none; color:var(--isu-gold); font-weight:500;">
+            [Profile image not found]
+          </div>
+        </div>
+        <h1 class="mb-2">Bailey Thomas Mendel</h1>
+        <p class="lead mb-3">MSS 2026 – Space Policy & Entrepreneurship Track</p>
+        <p class="mb-4" style="max-width:420px;margin:0 auto;">I focus on in-space oncology, disease modeling, and biomanufacturing. Business development and project management for new space applications.</p>
+        <div>
+          <a href="#projects" class="btn btn-warning fw-bold">Projects</a>
+          <button id="cvBtnHero" class="btn btn-outline-light fw-bold" style="display:none;" onclick="document.getElementById('cv').scrollIntoView({behavior:'smooth'});">CV</button>
+          <a href="#contact" class="btn btn-primary fw-bold">Contact</a>
+        </div>
+        <div class="mt-4 small" style="color:#ffe7a6;">
+          Unofficial student page. “International Space University” named here for study use only.
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+      <div class="container">
+        <div class="section-title">About</div>
+        <div class="mb-3">
+          <strong>Location:</strong> Strasbourg, France and Boston, Massachusetts
+        </div>
+        <div class="mb-3">
+          <strong>Current Program:</strong> MSS 2026 – Space Policy & Entrepreneurship Track at ISU
+        </div>
+        <div class="mb-3">
+          <strong>Bio:</strong>
+          <p>
+            I explore in-space applications for oncology, disease modeling, and biomanufacturing. My work spans business development, grant and project management, and driving new space opportunities for health and science.
+          </p>
+        </div>
+        <div class="mb-3">
+          <strong>Focus:</strong>
+          <ul>
+            <li>In-Space applications for Oncology</li>
+            <li>Disease Modeling</li>
+            <li>Biomanufacturing</li>
+            <li>Business Development</li>
+            <li>Grant &amp; Project Management</li>
+          </ul>
+        </div>
+        <div class="mb-3">
+          <strong>Tools:</strong>
+          <ul class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-2" style="list-style:none;">
+            <li>Epic</li>
+            <li>Veeva SiteVault</li>
+            <li>React</li>
+            <li>TypeScript</li>
+            <li>SAM.gov &amp; NSPIRES navigation</li>
+            <li>Grant Writing</li>
+            <li>GPT prompting</li>
+            <li>Python</li>
+            <li>Excel</li>
+            <li>PowerPoint</li>
+            <li>Notion</li>
+            <li>Trello</li>
+          </ul>
+        </div>
+        <div class="mb-3">
+          <strong>Languages:</strong> English, Spanish (conversational)
+        </div>
+        <div class="mb-3">
+          <strong>Interests:</strong>
+          <ul>
+            <li>LEO commercialization</li>
+            <li>Autonomous Cell Profiling</li>
+            <li>Oncology research &amp; Disease modeling</li>
+            <li>Investor Engagement</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <div class="container">
+        <div class="section-title">Projects</div>
+
+        <!-- Project 1 -->
+        <div class="card p-3">
+          <div class="project-title mb-1">Grant Writing for Early-Stage LEO Applications</div>
+          <div class="mb-2 text-secondary small">Multi-project grant efforts for in-space health research.</div>
+          <ul class="mb-2">
+            <li>
+              <strong>NSF SBIR (Phase 1):</strong> $275k award. Application of AlvusPheno, AI-informed autonomous cell phenotyping for LEO integration. Collaborators: MGH Center for Space Medicine Research, Alvus Health. <em>Outcome: Application Pending</em>
+            </li>
+            <li>
+              <strong>Orbital Edge Accelerator:</strong> $500k award. Application of AlvusPheno as above. Collaborators: MGH CSMR, SpaceTango, Alvus Health. <em>Outcome: Not Selected</em>
+            </li>
+            <li>
+              <strong>ISS National Lab NLRA 2024-09:</strong> $4m award. Microgravity for cancer drug discovery. Collaborators: MGH CSMR, SpaceTango, Alvus Health. <em>Outcome: Funding pulled</em>
+            </li>
+          </ul>
+          <ul>
+            <li><strong>Tool/Data:</strong> NSF/NIH/ISSNL grant portals, AlvusPheno AI platform</li>
+            <li><strong>Method:</strong> Grant writing, project design, multi-team collaboration</li>
+            <li><strong>Outcome:</strong> Three major grant applications, expanded partnerships</li>
+          </ul>
+          <div>
+            <!-- No demo or code links provided -->
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="card p-3">
+          <div class="project-title mb-1">Oncology Biotech Pilot Study (Co-Investigator)</div>
+          <div class="mb-2 text-secondary small">First author abstract accepted at ASCO 2025.</div>
+          <ul>
+            <li><strong>Tool/Data:</strong> Ex-vivo mass response testing (MRT), patient-derived tumor samples</li>
+            <li><strong>Method:</strong> Proprietary workflow, collaboration with Mass General Cancer Center &amp; Travera Inc.</li>
+            <li><strong>Outcome:</strong> Novel data for oncology, abstract accepted at ASCO 2025</li>
+          </ul>
+          <div>
+            <!-- No demo or code links provided -->
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="card p-3">
+          <div class="project-title mb-1">Oncassist.org – Founder &amp; Developer</div>
+          <div class="mb-2 text-secondary small">Public database for oncologic liquid biopsies. Website is live.</div>
+          <ul>
+            <li><strong>Tool/Data:</strong> GPT prompting, clinical market research, web databases</li>
+            <li><strong>Method:</strong> Built with React &amp; TypeScript, informed by clinical trends</li>
+            <li><strong>Outcome:</strong> Publicly available site for clinicians and researchers</li>
+          </ul>
+          <div>
+            <a href="https://oncassist.org" class="btn btn-primary btn-sm me-2" target="_blank" rel="noopener">Demo</a>
+            <!-- No code link provided -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience">
+      <div class="container">
+        <div class="section-title">Experience</div>
+        <div class="timeline">
+          <div class="timeline-entry">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div>
+              <strong>Translational Researcher &amp; Business Development Associate</strong><br>
+              <span class="text-secondary">Mass General Hospital Center for Space Medicine Research (CSMR)</span><br>
+              <span class="text-secondary small">July 2024 – Present</span>
+              <div class="mt-1">Supporting new space medicine programs and partnerships at the clinical-academic interface.</div>
+            </div>
+          </div>
+          <div class="timeline-entry">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div>
+              <strong>Clinical Research Coordinator/Associate</strong><br>
+              <span class="text-secondary">Mass General Cancer Center, GI Radiation Oncology division</span><br>
+              <span class="text-secondary small">August 2022 – August 2025</span>
+              <div class="mt-1">Coordinated clinical trials and research for GI cancer patients. Led data collection and study logistics.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CV -->
+    <section id="cv">
+      <div class="container">
+        <div class="section-title">CV</div>
+        <div class="d-flex align-items-center mb-3">
+          <a id="cvBtn" href="cv.pdf" target="_blank" class="btn btn-warning fw-bold me-3" style="display:none;">
+            <i class="bi bi-file-earmark-person"></i> Open CV
+          </a>
+          <span id="cvNote" style="color:var(--isu-gold);">Add cv.pdf to enable the CV button.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="container">
+        <div class="section-title">Contact</div>
+        <div class="mb-3">
+          <strong>Email:</strong>
+          <span id="email" class="ms-2">bailey.mendel98@gmail.com</span>
+        </div>
+        <div class="mb-3 d-flex" style="gap:1em;">
+          <a id="mailLink" href="mailto:bailey.mendel98@gmail.com" class="btn btn-primary fw-bold" aria-label="Send email to Bailey Mendel">
+            <i class="bi bi-envelope"></i> Email
+          </a>
+          <button id="copyEmailBtn" type="button" class="btn btn-outline-warning fw-bold" aria-label="Copy email to clipboard">
+            <i class="bi bi-clipboard"></i> Copy email
+          </button>
+          <span id="copyFeedback" class="copy-feedback" aria-live="polite" style="display:none;"></span>
+        </div>
+        <div class="mb-2">
+          <strong>LinkedIn:</strong>
+          <a href="https://www.linkedin.com/in/bailey-mendel" target="_blank" rel="noopener" aria-label="LinkedIn profile">linkedin.com/in/bailey-mendel</a>
+        </div>
+        <div class="mb-2">
+          <strong>GitHub:</strong>
+          <a href="https://github.com/bmendel7" target="_blank" rel="noopener" aria-label="GitHub profile">github.com/bmendel7</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Edit Checklist -->
+    <section id="edit-checklist">
+      <div class="container">
+        <div class="section-title">Edit Checklist</div>
+        <ul>
+          <li>Add or update <strong>cv.pdf</strong> at the repo root</li>
+          <li>Add/replace <strong>profile.jpg</strong> for profile image</li>
+          <li>Update project demo/code links as needed</li>
+          <li>Update experience entries as your career evolves</li>
+          <li>Check for typos and keep content current</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="mt-5 py-4 text-center" style="background:var(--isu-blue); color:var(--isu-sky);">
+    <div>
+      <span id="year"></span> &copy; Bailey Thomas Mendel. Unofficial student page.
+    </div>
+    <div class="small" style="color:var(--isu-gold);">
+      “International Space University” named here for study use only.
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Accessibility: keyboard focus for skip link
+    document.querySelector('.skip-link').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        document.getElementById('main').focus();
+      }
+    });
+
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-bs-theme', theme);
+      localStorage.setItem('theme', theme);
+      if (theme === 'dark') {
+        themeIcon.className = 'bi bi-moon-stars';
+      } else {
+        themeIcon.className = 'bi bi-brightness-high';
+      }
+    }
+    // On load: set theme from localStorage or default to 'dark'
+    (function() {
+      let stored = localStorage.getItem('theme');
+      let theme = stored ? stored : 'dark';
+      setTheme(theme);
+    })();
+    themeToggle.addEventListener('click', function() {
+      let current = document.documentElement.getAttribute('data-bs-theme');
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // Update current year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // CV HEAD fetch
+    function checkCV() {
+      fetch('cv.pdf', {method:'HEAD'}).then(res => {
+        if (res.ok) {
+          document.getElementById('cvBtn').style.display = 'inline-block';
+          document.getElementById('cvBtnHero').style.display = 'inline-block';
+          document.getElementById('cvNote').style.display = 'none';
+        } else {
+          document.getElementById('cvBtn').style.display = 'none';
+          document.getElementById('cvBtnHero').style.display = 'none';
+          document.getElementById('cvNote').style.display = 'inline-block';
+        }
+      }).catch(() => {
+        document.getElementById('cvBtn').style.display = 'none';
+        document.getElementById('cvBtnHero').style.display = 'none';
+        document.getElementById('cvNote').style.display = 'inline-block';
+      });
+    }
+    checkCV();
+
+    // Contact helpers
+    const email = 'bailey.mendel98@gmail.com';
+    document.getElementById('email').textContent = email;
+    document.getElementById('mailLink').href = 'mailto:' + email;
+    document.getElementById('copyEmailBtn').addEventListener('click', function() {
+      navigator.clipboard.writeText(email).then(function() {
+        showCopyFeedback('Copied!');
+      }, function() {
+        showCopyFeedback('Failed to copy');
+      });
+    });
+    function showCopyFeedback(msg) {
+      const el = document.getElementById('copyFeedback');
+      el.textContent = msg;
+      el.style.display = 'inline';
+      setTimeout(() => {
+        el.style.display = 'none';
+      }, 1800);
+    }
+
+    // Smooth scroll - reduced motion check
+    function smoothScrollSetup() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+          const targetId = this.getAttribute('href').slice(1);
+          if (!targetId) return;
+          const target = document.getElementById(targetId);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({behavior:'smooth'});
+            target.setAttribute('tabindex', '-1');
+            target.focus({preventScroll:true});
+          }
+        });
+      });
+    }
+    smoothScrollSetup();
+  </script>
+</body>
+</html>
